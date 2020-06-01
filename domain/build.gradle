@@ -1,0 +1,39 @@
+apply plugin:'java'
+
+/* build using external library */
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.22")
+    }
+}
+
+sourceSets {
+    main {
+        resources.srcDirs = [srcDirName, resourceDirName]
+    }
+}
+
+/* compile repositories */
+repositories {
+    mavenCentral()
+}
+
+/* compile dependencies library */
+dependencies {
+    compile project(':application')
+    compile project(':domain')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+/* test setting */
+test {
+    useJUnitPlatform()
+}

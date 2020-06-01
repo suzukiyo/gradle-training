@@ -1,0 +1,55 @@
+/* gradle plugin */
+plugins {
+	id 'org.springframework.boot' version '2.3.0.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'com.github.sherter.google-java-format' version '0.7.1'
+	id 'java'
+}
+
+/* compile dependency configurations  */
+configurations {
+	compile {
+
+	}
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	compileInclude {
+
+	}
+}
+
+subprojects {
+
+	/* build using external library */
+	buildscript {
+		repositories {
+			mavenCentral()
+		}
+		dependencies {
+			classpath("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.22")
+		}
+	}
+
+	/* extract variable */
+	ext.srcDirName = 'src/main/java'
+	ext.resourceDirName = 'src/main/resources'
+
+	/* project setting */
+	group = 'com.example'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '11'
+
+	/* compile repositories */
+	repositories {
+		mavenCentral()
+		maven { url 'https://repo.spring.io/milestone' }
+		maven { url 'https://repo.spring.io/snapshot' }
+	}
+
+	/* test setting */
+	test {
+		useJUnitPlatform()
+	}
+
+}

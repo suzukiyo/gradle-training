@@ -1,0 +1,21 @@
+rootProject.name = 'demo'
+
+include ':ui'
+include ':presentation'
+include ':application'
+include ':infrastructure'
+include ':domain'
+
+/* Keep code formats consistent */
+new File(".git/hooks/pre-commit").text = """
+#!/bin/bash
+set -o pipefail
+./gradlew googleJavaFormat | grep "formatted successfully" > /dev/null 2>&1
+if [ \$? -eq 0 ]; then
+    echo "Java source code(s) are formatted. Please add files agein."
+    exit 1
+fi
+exit 0
+"""
+
+"chmod 755 .git/hooks/pre-commit".execute()
